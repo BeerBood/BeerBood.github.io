@@ -1,56 +1,132 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Leaflet.Coordinates Demo Page</title>
-	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-	 <style>
-	   html, body, #map {
-	      height:100%;
-	      width:100%;
-	      padding:0px;
-	      margin:0px;
-	   }
-	</style>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+		<script src="https://unpkg.com/unlazy@0.11.3/dist/unlazy.with-hashing.iife.js" defer init></script>
+		<script type="text/javascript">
+			window.tailwind.config = {
+				darkMode: ['class'],
+				theme: {
+					extend: {
+						colors: {
+							border: 'hsl(var(--border))',
+							input: 'hsl(var(--input))',
+							ring: 'hsl(var(--ring))',
+							background: 'hsl(var(--background))',
+							foreground: 'hsl(var(--foreground))',
+							primary: {
+								DEFAULT: 'hsl(var(--primary))',
+								foreground: 'hsl(var(--primary-foreground))'
+							},
+							secondary: {
+								DEFAULT: 'hsl(var(--secondary))',
+								foreground: 'hsl(var(--secondary-foreground))'
+							},
+							destructive: {
+								DEFAULT: 'hsl(var(--destructive))',
+								foreground: 'hsl(var(--destructive-foreground))'
+							},
+							muted: {
+								DEFAULT: 'hsl(var(--muted))',
+								foreground: 'hsl(var(--muted-foreground))'
+							},
+							accent: {
+								DEFAULT: 'hsl(var(--accent))',
+								foreground: 'hsl(var(--accent-foreground))'
+							},
+							popover: {
+								DEFAULT: 'hsl(var(--popover))',
+								foreground: 'hsl(var(--popover-foreground))'
+							},
+							card: {
+								DEFAULT: 'hsl(var(--card))',
+								foreground: 'hsl(var(--card-foreground))'
+							},
+						},
+					}
+				}
+			}
+		</script>
+		<style type="text/tailwindcss">
+			@layer base {
+				:root {
+					--background: 0 0% 100%;
+--foreground: 240 10% 3.9%;
+--card: 0 0% 100%;
+--card-foreground: 240 10% 3.9%;
+--popover: 0 0% 100%;
+--popover-foreground: 240 10% 3.9%;
+--primary: 240 5.9% 10%;
+--primary-foreground: 0 0% 98%;
+--secondary: 240 4.8% 95.9%;
+--secondary-foreground: 240 5.9% 10%;
+--muted: 240 4.8% 95.9%;
+--muted-foreground: 240 3.8% 46.1%;
+--accent: 240 4.8% 95.9%;
+--accent-foreground: 240 5.9% 10%;
+--destructive: 0 84.2% 60.2%;
+--destructive-foreground: 0 0% 98%;
+--border: 240 5.9% 90%;
+--input: 240 5.9% 90%;
+--ring: 240 5.9% 10%;
+--radius: 0.5rem;
+				}
+				.dark {
+					--background: 240 10% 3.9%;
+--foreground: 0 0% 98%;
+--card: 240 10% 3.9%;
+--card-foreground: 0 0% 98%;
+--popover: 240 10% 3.9%;
+--popover-foreground: 0 0% 98%;
+--primary: 0 0% 98%;
+--primary-foreground: 240 5.9% 10%;
+--secondary: 240 3.7% 15.9%;
+--secondary-foreground: 0 0% 98%;
+--muted: 240 3.7% 15.9%;
+--muted-foreground: 240 5% 64.9%;
+--accent: 240 3.7% 15.9%;
+--accent-foreground: 0 0% 98%;
+--destructive: 0 62.8% 30.6%;
+--destructive-foreground: 0 0% 98%;
+--border: 240 3.7% 15.9%;
+--input: 240 3.7% 15.9%;
+--ring: 240 4.9% 83.9%;
+				}
+			}
+		</style>
+  </head>
+  <body>
+    
 
-	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.2/leaflet.css" />
-	<!--[if lte IE 8]><link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.2/leaflet.ie.css" /><![endif]-->
+<div class="bg-background p-6">
+  <h1 class="text-2xl font-bold text-foreground">องค์ความรู้</h1>
+  <div class="mt-4">
+    <label for="search" class="block text-muted-foreground">ค้นหา:</label>
+    <input type="text" id="search" placeholder="การดำเนินการด้านการชำนาญ (ภาคสนาม) ผ่าน Application Line" class="mt-1 p-2 border border-border rounded-lg w-full" />
+    <select class="mt-2 p-2 border border-border rounded-lg w-full">
+      <option>กรุณาเลือกประเภท</option>
+      <option>ประเภท 1</option>
+      <option>ประเภท 2</option>
+    </select>
+    <button class="mt-4 bg-primary text-primary-foreground hover:bg-primary/80 p-2 rounded-lg">ค้นหา</button>
+  </div>
+  <div class="mt-8">
+    <h2 class="text-xl font-semibold text-foreground">เกี่ยวข้อง</h2>
+    <ul class="mt-2">
+      <li class="bg-card p-4 rounded-lg mb-2">
+        <h3 class="font-bold">การทำงานแบบสัญญา (3 Point Contact)</h3>
+        <span class="text-muted-foreground">13 ม.ค. 2024</span>
+      </li>
+      <li class="bg-card p-4 rounded-lg mb-2">
+        <h3 class="font-bold">การกลับมารับการประเมินระบบ SAP</h3>
+        <span class="text-muted-foreground">24 ม.ค. 2024</span>
+      </li>
+    </ul>
+  </div>
+</div>
 
-	<script type="text/javascript" src="http://cdn.leafletjs.com/leaflet-0.6.2/leaflet.js"></script>
-	<script type="text/javascript" src="../dist/Leaflet.Coordinates-0.1.5.min.js"></script>
-	<link rel="stylesheet" href="../dist/Leaflet.Coordinates-0.1.5.css"/>
-	<!--[if lte IE 8]><link rel="stylesheet" href="../dist/Leaflet.Coordinates-0.1.3.ie.css" /><![endif]-->
-</head>
-<body>
 
-	<div id="map"></div>
-
-	<script type="text/javascript">
-		var map = new L.Map('map');
-
-		var url = 'http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg',
-			attr ='Tiles Courtesy of <a href="http://www.mapquest.com/">MapQuest</a> &mdash; Map data {attribution.OpenStreetMap}',
-			service = new L.TileLayer(url, {subdomains:"1234",attribution: attr});
-
-		var bounds = new L.LatLngBounds(new L.LatLng(40, 7), new L.LatLng(55, 10));
-
-		map.addLayer(service).fitBounds(bounds);
-		//add standard controls
-		L.control.coordinates().addTo(map);
-		//add configured controls
-		L.control.coordinates({
-			position:"bottomleft",
-			decimals:2,
-			decimalSeperator:",",
-			labelTemplateLat:"Latitude: {y}",
-			labelTemplateLng:"Longitude: {x}"
-		}).addTo(map);
-		L.control.coordinates({
-			position:"topright",
-			useDMS:true,
-			labelTemplateLat:"N {y}",
-			labelTemplateLng:"E {x}",
-			useLatLngOrder:true
-		}).addTo(map);
-	</script>
-</body>
+  </body>
 </html>
